@@ -19,11 +19,13 @@ ROMNAME = ROM2313
 ROMADDRESSWIDTH = 10
 
 #Important! If you change this, change it in the scr files in build/scripts, too!
-TARGETFPGA = xc3s700an-fgg484-4
-BOARD = starterkit
+#TARGETFPGA = xc3s700an-fgg484-4
+#BOARD = starterkit
+#FLASHTOOL =
 
 TARGETFPGA = xc3s1200e-fg320-4
 BOARD = nexys2
+FLASHTOOL= nexys2prog 
 
 CONSTRAINTS = $(TARGET)_$(BOARD)_constraints.ucf
 XSTSCRIPT = build/scripts/$(TARGET).scr
@@ -32,7 +34,7 @@ XSTSCRIPT = build/scripts/$(TARGET).scr
 
 #root of your xilinx binaries
 XILINXROOT = /opt/Xilinx/11.1/ISE/bin/lin
-XILINXROOT = /home/david/Data/devel/apps/Xilinx/11.1/ISE/bin/lin
+#XILINXROOT = /home/david/Data/devel/apps/Xilinx/11.1/ISE/bin/lin
 
 #be sure to build this tool, first
 HEX2ROM = sw/hex2rom
@@ -67,6 +69,8 @@ $(TARGET).bit: buildrom synthesize map placeandroute
 	cd $(OBJDIR); $(BITGEN) -w $(TARGET).ncd $@
 	mv $(OBJDIR)/$@ $(PROJECTROOT)
 
+upload: $(TARGET).bit 
+	$(FLASHTOOL) $(TARGET).bit  
 clean:
 	rm -rf $(OBJDIR)/*
 	rm -rf $(TARGET).bit
