@@ -2,21 +2,21 @@ OBJDIR = build/obj
 PROJECTROOT = $(shell pwd)
 
 #Uncomment this for the 1200 avr
-#TARGET = a90s1200
+TARGET = a90s1200
 #must be built first with avr-gcc
-#HEXFILE = sw/1200_test/test.hex
+HEXFILE = sw/1200_test/test.hex
 #instance name, see a90s1200.vhd
-#ROMNAME = ROM1200
+ROMNAME = ROM1200
 #address width, see a90s1200.vhd
-#ROMADDRESSWIDTH = 9
+ROMADDRESSWIDTH = 9
 
 #Uncomment this for the 2313 avr
-TARGET = a90s2313
-HEXFILE = sw/2313_test/test.hex
+#TARGET = a90s2313
+#HEXFILE = sw/2313_test/test.hex
 #instance name, see a90s2313.vhd
-ROMNAME = ROM2313
+#ROMNAME = ROM2313
 #address width, see a90s2313.vhd
-ROMADDRESSWIDTH = 10
+#ROMADDRESSWIDTH = 10
 
 #Important! If you change this, change it in the scr files in build/scripts, too!
 #TARGETFPGA = xc3s700an-fgg484-4
@@ -69,8 +69,8 @@ $(TARGET).bit: buildrom synthesize map placeandroute
 	cd $(OBJDIR); $(BITGEN) -w $(TARGET).ncd $@
 	mv $(OBJDIR)/$@ $(PROJECTROOT)
 
-upload: $(TARGET).bit 
-	$(FLASHTOOL) $(TARGET).bit  
+upload:
+	$(FLASHTOOL) -v $(TARGET).bit  
 clean:
 	rm -rf $(OBJDIR)/*
 	rm -rf $(TARGET).bit
