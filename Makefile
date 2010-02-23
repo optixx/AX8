@@ -81,6 +81,8 @@ upload:
 clean:
 	rm -rf $(OBJDIR)/*
 	rm -rf $(TARGET).bit
+	rm -rf $(TARGET).svf
+	rm -rv _impact*
 
 .PHONY: all clean
 
